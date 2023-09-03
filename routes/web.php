@@ -14,9 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('trip.index');
+    return redirect(url('trip'));
 });
 
 Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('trip', [App\Http\Controllers\TripController::class, 'index']);
+
+    Route::get('driver', [App\Http\Controllers\DriverController::class, 'index']);
+    Route::post('insert-driver', [App\Http\Controllers\DriverController::class, 'InsertDriver']);
+
+    Route::get('track', [App\Http\Controllers\TrackController::class, 'index']);
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
